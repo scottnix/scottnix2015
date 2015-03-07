@@ -1,0 +1,16 @@
+{
+  "name": "scottnix2015",
+  "version": "0.0.1",
+  "description": " Built on the Responsive Base Plus child theme for the Thematic Framework",
+  "main": "gulpfile.js",
+  "private": true,
+  "devDependencies": {
+    "gulp": "~3.6.2",
+    "gulp-autoprefixer": "~0.0.7",
+    "gulp-livereload": "~1.3.1",
+    "gulp-notify": "~1.2.5",
+    "gulp-rename": "~1.2.0",
+    "gulp-ruby-sass": "~0.4.3",
+    "tiny-lr": "~0.0.5"
+  }
+}
