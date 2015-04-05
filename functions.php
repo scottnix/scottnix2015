@@ -278,3 +278,96 @@ function childtheme_search_field_value() {
   return "Search";
 }
 add_filter('search_field_value', 'childtheme_search_field_value');
+
+
+
+
+
+
+
+// new shit
+
+//disable comments
+function remove_comments () {
+  remove_action('thematic_comments_template', 'thematic_include_comments', 5);
+}
+add_action('thematic_child_init', 'remove_comments');
+
+
+
+// kill the post header information, loading this below in the post footer
+function childtheme_override_postheader_postmeta() {
+    // silence!
+}
+
+
+// example of changing up the display of the entry-utility for a different look
+function childtheme_override_postfooter() {
+    $post_type = get_post_type();
+    $post_type_obj = get_post_type_object($post_type);
+    $tagsection = get_the_tags();
+
+    // Display nothing for "Page" post-type
+    if ( $post_type == 'page' ) {
+        $postfooter = '';
+    // For post-types other than "Pages" press on
+    } else {
+        $postfooter = '<footer class="entry-utility">';
+        $postfooter .= '<ul class="main-utilities">';
+        $postfooter .= '<li><svg class="icon-user"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-user"></use></svg>' . thematic_postmeta_authorlink() . '</li>';
+        $postfooter .= '<li><svg class="icon-calendar"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-calendar"></use></svg>' . thematic_postmeta_entrydate() . '</li>';
+ //       $postfooter .= '<li><svg class="icon-comment"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-comment"></use></svg>' . thematic_postfooter_postcomments() . '</li>';
+        $postfooter .= '</ul>';
+        $postfooter .= '<ul class="sub-utilities">';
+        $postfooter .= '<li><svg class="icon-folder"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-folder"></use></svg>' . thematic_postfooter_postcategory() . '</li>';
+            if ( $tagsection ) {
+        $postfooter .= '<li><svg class="icon-tag"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-tag"></use></svg>' . thematic_postfooter_posttags() . '</li>';
+            }
+            if ( is_user_logged_in() ) {
+                $postfooter .= '<li><svg class="icon-pencil"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-pencil"></use></svg>' . thematic_postfooter_posteditlink() . '</li>';
+            }
+        $postfooter .= '</ul>';
+        $postfooter .= "</footer><!-- .entry-utility -->\n";
+    }
+    // Put it on the screen
+    echo apply_filters( 'thematic_postfooter', $postfooter ); // Filter to override default post footer
+}
+
+
+function childtheme_postmeta_entrydate($entrydate) {
+    $entrydate = '<span class="meta-prep meta-prep-entry-date">' . __('', 'thematic') . '</span>';
+    $entrydate .= '<span class="entry-date">';
+    $entrydate .= get_the_time( thematic_time_display() );
+    $entrydate .= '</span>';
+    return $entrydate;
+}
+add_filter('thematic_postmeta_entrydate', 'childtheme_postmeta_entrydate');
+
+// remove unneeded code from postcategory
+function childtheme_override_postfooter_postcategory() {
+    $postcategory = '<span class="cat-links">';
+    if ( is_category() && $cats_meow = thematic_cats_meow(', ') ) {
+        $postcategory .= __('<span class="meta-prep meta-prep-category">Also posted in</span> ', 'thematic') . $cats_meow;
+    } else {
+        $postcategory .= __('<span class="meta-prep meta-prep-category">Posted in</span> ', 'thematic') . get_the_category_list(', ');
+    }
+    $postcategory .= '</span>';
+    return apply_filters('thematic_postfooter_postcategory',$postcategory);
+}
+
+// remove unneeded code from posttags
+function childtheme_override_postfooter_posttags() {
+    if ( is_single() && !is_object_in_taxonomy( get_post_type(), 'category' ) ) {
+        $tagtext = __('<span class="meta-prep meta-prep-tags">Tagged</span>', 'thematic');
+        $posttags = get_the_tag_list("<span class=\"tag-links\"> $tagtext ",', ','</span> ');
+    } elseif ( is_single() ) {
+        $tagtext = __('<span class="meta-prep meta-prep-tags">Tagged</span>', 'thematic');
+        $posttags = get_the_tag_list("<span class=\"tag-links\"> $tagtext ",', ','</span> ');
+    } elseif ( is_tag() && $tag_ur_it = thematic_tag_ur_it(', ') ) {
+        $posttags = '<span class="tag-links">' . __('<span class="meta-prep meta-prep-tags">Also tagged</span> ', 'thematic') . $tag_ur_it . '</span>' . "\n\n\t\t\t\t\t\t";
+    } else {
+        $tagtext = __('<span class="meta-prep meta-prep-tags">Tagged</span>', 'thematic');
+        $posttags = get_the_tag_list("<span class=\"tag-links\"> $tagtext ",', ','</span>' . "\n\n\t\t\t\t\t\t");
+    }
+    return apply_filters('thematic_postfooter_posttags',$posttags);
+}
