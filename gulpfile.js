@@ -13,7 +13,7 @@ gulp.task('styles', function() {
   return gulp.src('scss/style.scss')
     .pipe(sass({
       style: 'expanded',
-      compass: true,
+      compass: true,  // had to set to true to get Susy grid system to work, not sure why.
       require: ['susy']
     }))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'opera 12.1', 'ios 6', 'android 4'))
