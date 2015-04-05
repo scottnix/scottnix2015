@@ -8,6 +8,13 @@ Template: thematic
 Version: 0.1.1
 Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, full-width-template, responsive-layout
 */
+[class^="icon-"], [class*=" icon-"] {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  fill: currentColor;
+}
+
 /* ==========================================================================
    basic element styles (headings, links, etc.)
    ========================================================================== */
