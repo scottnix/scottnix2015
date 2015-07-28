@@ -9,12 +9,10 @@ var gulp = require('gulp'),
 
 // Styles
 gulp.task('styles', function() {
-  return gulp.src('scss/style.scss')
-    .pipe(sass({
+  return sass('scss/style.scss', {
       style: 'expanded',
-      compass: true,  // set true to get Susy Grids to work with gulp
       require: ['susy']
-    }))
+    })
     .pipe(autoprefixer({
       browsers: ['last 2 versions']
     }))
