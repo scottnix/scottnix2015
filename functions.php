@@ -43,6 +43,11 @@ function childtheme_script_manager() {
   wp_register_script('modernizr-js', get_stylesheet_directory_uri() . '/js/modernizr.js', false, false, false);
   // registers misc custom script, childtheme path, yes dependency is jquery, no version, loads in footer
   wp_register_script('custom-js', get_stylesheet_directory_uri() . '/js/custom.js', array('jquery'), false, true);
+ // register styles which are to be queued in the theme
+  wp_register_style('google-fonts', 'http://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+  // enqueue the styles for use in theme
+  wp_enqueue_style ('google-fonts');
 
   // enqueue the scripts for use in theme
   wp_enqueue_script ('modernizr-js');
