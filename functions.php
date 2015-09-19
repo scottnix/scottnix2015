@@ -319,25 +319,13 @@ function childtheme_override_postfooter() {
     } else {
         $postfooter = '<footer class="entry-utility">';
         $postfooter .= '<ul class="main-utilities">';
-        $postfooter .= '<li><svg class="icon-user"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-user"></use></svg>' . thematic_postmeta_authorlink() . '</li>';
         $postfooter .= '<li><svg class="icon-calendar"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-calendar"></use></svg>' . thematic_postmeta_entrydate() . '</li>';
- //       $postfooter .= '<li><svg class="icon-comment"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-comment"></use></svg>' . thematic_postfooter_postcomments() . '</li>';
-        $postfooter .= '</ul>';
-        $postfooter .= '<ul class="sub-utilities">';
-        $postfooter .= '<li><svg class="icon-folder"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-folder"></use></svg>' . thematic_postfooter_postcategory() . '</li>';
-            if ( $tagsection ) {
-        $postfooter .= '<li><svg class="icon-tag"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-tag"></use></svg>' . thematic_postfooter_posttags() . '</li>';
-            }
-            if ( is_user_logged_in() ) {
-                $postfooter .= '<li><svg class="icon-pencil"><use xlink:href="' . get_stylesheet_directory_uri() . '/icons/icons.svg#icon-pencil"></use></svg>' . thematic_postfooter_posteditlink() . '</li>';
-            }
         $postfooter .= '</ul>';
         $postfooter .= "</footer><!-- .entry-utility -->\n";
     }
     // Put it on the screen
     echo apply_filters( 'thematic_postfooter', $postfooter ); // Filter to override default post footer
 }
-
 
 function childtheme_postmeta_entrydate($entrydate) {
     $entrydate = '<span class="meta-prep meta-prep-entry-date">' . __('', 'thematic') . '</span>';
@@ -376,3 +364,31 @@ function childtheme_override_postfooter_posttags() {
     }
     return apply_filters('thematic_postfooter_posttags',$posttags);
 }
+
+
+
+
+// add random div example
+function childtheme_aboveheader() { ?>
+  <div class="header-wrap">
+<?php }
+add_action('thematic_aboveheader', 'childtheme_aboveheader');
+
+// add random div example
+function childtheme_belowheader() { ?>
+  </div>
+<?php }
+add_action('thematic_belowheader', 'childtheme_belowheader');
+
+
+// add random div example
+function childtheme_abovefooter() { ?>
+  <div class="footer-wrap">
+<?php }
+add_action('thematic_abovefooter', 'childtheme_abovefooter');
+
+// add random div example
+function childtheme_belowfooter() { ?>
+  </div>
+<?php }
+add_action('thematic_belowfooter', 'childtheme_belowfooter');
